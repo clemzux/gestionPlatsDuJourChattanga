@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_new_dayDish"
             android:icon="@drawable/add"
-            android:title="Nouveau plat du jour" />
+            android:title="Nouveau plat du jour"/>
 
         <item
             android:id="@+id/nav_consult_dayDish"

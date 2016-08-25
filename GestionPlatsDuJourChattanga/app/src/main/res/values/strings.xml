@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Gestion plats du jour</string>
+    <string name="title_activity_consult">Consult</string>
+    <string name="title_activity_consult_day_dish">ConsultDayDish</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

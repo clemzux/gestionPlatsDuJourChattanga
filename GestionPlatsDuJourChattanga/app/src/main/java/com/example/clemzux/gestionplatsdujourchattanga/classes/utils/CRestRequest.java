@@ -29,8 +29,8 @@ public class CRestRequest {
     public static String post(Object pObject, String pObjectType) throws ExecutionException, InterruptedException {
         String returnValue = "0";
         sObject = pObject;
-        String mUrlString = CUtils.SERVER_URL + pObjectType;
-        returnValue = (new post_Put().execute(mUrlString, CUtils.POST).get());
+        String mUrlString = CProperties.SERVER_URL + pObjectType;
+        returnValue = (new post_Put().execute(mUrlString, CProperties.POST).get());
         Log.d("rest : ",returnValue);
         return returnValue;
     }
@@ -39,9 +39,17 @@ public class CRestRequest {
     public static void  put(Object pObject, String pObjectType) throws ExecutionException, InterruptedException {
         sObject = pObject;
 
-        String mUrlString = CUtils.SERVER_URL + pObjectType;
+        String mUrlString = CProperties.SERVER_URL + pObjectType;
 
-        new post_Put().execute(mUrlString, CUtils.PUT);
+        new post_Put().execute(mUrlString, CProperties.PUT);
+    }
+
+    // Fonction which is setting url and call asynctask for GET ALL requests
+    public static String get_All(String mObjectType) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + mObjectType;
+
+        return new get_Del().execute(mUrlString, CProperties.GET_ALL).get();
     }
 
 
@@ -67,10 +75,10 @@ public class CRestRequest {
 
             try {
                 mUrlConnection.setRequestProperty("Content-Type", "application/json");
-                mUrlConnection.setRequestMethod(CUtils.POST);
-                if ((mRequestType.equals(CUtils.PUT))& !mRequestType.isEmpty())
+                mUrlConnection.setRequestMethod(CProperties.POST);
+                if ((mRequestType.equals(CProperties.PUT))& !mRequestType.isEmpty())
                 {
-                    mUrlConnection.setRequestMethod(CUtils.PUT);
+                    mUrlConnection.setRequestMethod(CProperties.PUT);
                 }
 
                 mUrlConnection.setDoInput(true);
@@ -100,7 +108,7 @@ public class CRestRequest {
 
             HttpURLConnection mUrlConnection = initializeConnection(mUrlString);
 
-            if ((mRequestType.equals(CUtils.GET) | mRequestType.equals(CUtils.GET_ALL) | mRequestType.equals(CUtils.GET_BY) & !mRequestType.isEmpty())) {
+            if ((mRequestType.equals(CProperties.GET) | mRequestType.equals(CProperties.GET_ALL) | mRequestType.equals(CProperties.GET_BY) & !mRequestType.isEmpty())) {
                 try {
                     mUrlConnection.connect();
                     InputStream mInputStream = mUrlConnection.getInputStream();
@@ -109,9 +117,9 @@ public class CRestRequest {
                 }
             }
 
-            if (mRequestType.equals(CUtils.DELETE)) {
+            if (mRequestType.equals(CProperties.DELETE)) {
                 try {
-                    mUrlConnection.setRequestMethod(CUtils.DELETE);
+                    mUrlConnection.setRequestMethod(CProperties.DELETE);
                     mUrlConnection.setRequestProperty("Content-type", "application/json");
 
                 } catch (ProtocolException e) {

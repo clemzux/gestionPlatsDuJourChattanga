@@ -1,5 +1,7 @@
 package com.example.clemzux.gestionplatsdujourchattanga.classes.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,19 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clemzux.gestionplatsdujourchattanga.R;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CConsultDayDish;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CRestRequest;
-import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CUtils;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CUtilitaries;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import chattanga.classes.CDate;
-import cz.msebera.android.httpclient.Header;
 
-public class home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     //////// vars ////////
@@ -44,6 +45,8 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
 
     private int currentYear;
     private String day, month, dateComplete, dayDish;
+
+    private ActionBarDrawerToggle toggle;
 
 
     //////// methods ////////
@@ -60,7 +63,7 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -68,7 +71,7 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // initialisation des widgets
+//         initialisation des widgets
 
         initWidgets();
 
@@ -152,26 +155,6 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
         date.setDayDish(dayDish);
 
         CRestRequest.put(date, "dates");
-
-//        // on range l'objet dans des parametres d'envoi
-//
-//        RequestParams params = new RequestParams();
-//        params.put("dayDish", date);
-//
-//        // on envoie l'objet
-
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        client.put(CUtils.SERVER_URL, params, new AsyncHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//
-//            }
-//        });
     }
 
 
@@ -265,26 +248,37 @@ public class home extends AppCompatActivity implements NavigationView.OnNavigati
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    public boolean onNavigationItemSelected(MenuItem pItem) {
 
-        if (id == R.id.nav_new_dayDish) {
+        activityOpener(getApplicationContext(), pItem, CProperties.HOME_ACTIVITY);
 
-        } else if (id == R.id.nav_consult_dayDish) {
+        return true;
+    }
 
-        } else if (id == R.id.nav_consult_reservations) {
+    public void activityOpener(Context pContext, MenuItem pItem, String pComingFrom) {
 
+        int id = pItem.getItemId();
+
+        if (id == R.id.nav_new_dayDish && !pComingFrom.equals(CProperties.HOME_ACTIVITY)) {
+
+            Intent homeIntent = new Intent(pContext, CHome.class);
+            startActivity(homeIntent);
+        }
+        else if (id == R.id.nav_consult_dayDish && !pComingFrom.equals(CProperties.DAYDISH_ACTIVITY)) {
+
+            Intent consultDayDishIntent = new Intent(pContext, CConsultDayDish.class);
+            startActivity(consultDayDishIntent);
+        }
+        else if (id == R.id.nav_consult_reservations && !pComingFrom.equals(CProperties.RESERVATION_ACTIVITY)) {
+
+            Intent consultReservationsIntent = new Intent(pContext, CConsultReservation.class);
+            startActivity(consultReservationsIntent);
+        }
+        else {
+            CUtilitaries.test(pContext, "T'y est deja gros ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void test(String pVar) {
-
-        Toast t = Toast.makeText(getApplicationContext(), pVar, Toast.LENGTH_SHORT);
-        t.show();
     }
 }

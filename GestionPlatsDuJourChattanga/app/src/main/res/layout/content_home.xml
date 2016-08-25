@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".classes.home.home"
+    tools:context=".classes.home.CHome"
     tools:showIn="@layout/app_bar_home">
 
     <LinearLayout
@@ -25,10 +25,6 @@
             android:text="Nouveau plat du jour"
             android:textStyle="bold"
             android:textSize="25dp"/>
-
-
-        <!-- Zone de saisie de la date -->
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +74,8 @@
                 android:id="@+id/dayDish_editText"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nom du plat (purée jambon)"/>
+                android:hint="Nom du plat (purée jambon)"
+                android:lines="3"/>
 
         </LinearLayout>
 
@@ -97,7 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Valider"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"/>
 
         </LinearLayout>
     </LinearLayout>
