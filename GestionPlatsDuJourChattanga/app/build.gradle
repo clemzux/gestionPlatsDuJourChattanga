@@ -24,4 +24,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
+    compile group: 'com.loopj.android', name: 'android-async-http', version: '1.4.9'
+    compile files ('/home/clemzux/IdeaProjects/ServerApplicationChattanga/serverApplicationChattanga/target/serverApplicationChattanga-1.0-SNAPSHOT.jar')
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
 }
