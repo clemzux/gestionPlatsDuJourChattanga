@@ -18,6 +18,11 @@
             android:icon="@drawable/watch"
             android:title="Consulter reservations" />
 
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/camera"
+            android:title="Prendre un plat en photo" />
+
     </group>
 
 </menu>

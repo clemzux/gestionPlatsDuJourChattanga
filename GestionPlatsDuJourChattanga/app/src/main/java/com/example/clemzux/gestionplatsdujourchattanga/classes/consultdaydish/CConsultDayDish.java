@@ -134,6 +134,7 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
         modificationDayDishIntent.putExtra("id", String.valueOf(dayDishList.get(pDayDishNumber).getId()));
         modificationDayDishIntent.putExtra("date", dayDishList.get(pDayDishNumber).getDate());
         modificationDayDishIntent.putExtra("dayDish", dayDishList.get(pDayDishNumber).getDayDish());
+        modificationDayDishIntent.putExtra("imageIdentifier", dayDishList.get(pDayDishNumber).getImageIdentifier());
 
         startActivity(modificationDayDishIntent);
     }
@@ -145,7 +146,6 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
         CJsonDecoder<CDate> mDatesCJsonDecoder = new CJsonDecoder<CDate>();
 
         dayDishList = mDatesCJsonDecoder.DecoderList(mRequest, CDate.class);
-
     }
 
 

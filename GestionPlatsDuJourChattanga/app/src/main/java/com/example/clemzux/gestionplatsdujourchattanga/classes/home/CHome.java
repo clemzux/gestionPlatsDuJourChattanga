@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clemzux.gestionplatsdujourchattanga.R;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.camera.CCamera;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CConsultDayDish;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
@@ -40,7 +41,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
 
     private Spinner daysSpinner, monthsSpinner;
     private TextView yearTextView;
-    private EditText dayDishEditText;
+    private EditText dayDishEditText, imageIdentifierEditText;
     private Button validateButton;
 
     private int currentYear;
@@ -71,7 +72,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-//         initialisation des widgets
+        // initialisation des widgets
 
         initWidgets();
 
@@ -92,7 +93,6 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
     private void initCurrentYear() {
 
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
         yearTextView.setText(String.valueOf(currentYear));
     }
 
@@ -115,7 +115,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
 
         day = daysSpinner.getSelectedItem().toString();
         month = monthsSpinner.getSelectedItem().toString();
-        dateComplete = day + "/" + month + "/" + currentYear;
+        dateComplete = day + "-" + month + "-" + currentYear;
 
         dayDish = dayDishEditText.getText().toString();
 
@@ -153,14 +153,15 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
         CDate date = new CDate();
         date.setDate(dateComplete);
         date.setDayDish(dayDish);
+        date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
 
-        CRestRequest.put(date, "dates");
+        CRestRequest.post(date, "dates");
     }
 
 
     private void alert(int pAlertType) {
 
-        String alertText = null;
+        String alertText;
 
         if (pAlertType == 1)
             alertText = "Le jour n'a pas été choisit !";
@@ -209,6 +210,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
         yearTextView = (TextView) findViewById(R.id.year_textView);
 
         dayDishEditText = (EditText) findViewById(R.id.dayDish_editText);
+        imageIdentifierEditText = (EditText) findViewById(R.id.image_identifier_editText);
 
         validateButton = (Button) findViewById(R.id.validate_button);
     }
@@ -273,6 +275,11 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
 
             Intent consultReservationsIntent = new Intent(pContext, CConsultReservation.class);
             startActivity(consultReservationsIntent);
+        }
+        else if (id == R.id.nav_camera && !pComingFrom.equals(CProperties.CAMERA_ACTIVITY)) {
+
+            Intent cameraIntent = new Intent(pContext, CCamera.class);
+            startActivity(cameraIntent);
         }
         else {
             CUtilitaries.test(pContext, "T'y est deja gros ;-)");

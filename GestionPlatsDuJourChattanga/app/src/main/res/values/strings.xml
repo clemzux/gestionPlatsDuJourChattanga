@@ -8,6 +8,8 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="image_identifier_textview">Identifiant de l\'image : </string>
+
     <!-- Spinner's array -->
 
     <string-array name="days_array">

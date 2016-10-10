@@ -36,7 +36,8 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
 
 
     private CDate date = null;
-    private EditText dayDishEditText;
+    private TextView dateTextView;
+    private EditText dayDishEditText, imageIdentifierEditText;
     private Button validateButton;
 
 
@@ -64,14 +65,9 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
 
         // mon code
 
-        Intent intent = getIntent();
+        // initialisation plat du jour
 
-        date = new CDate();
-        date.setId(Integer.valueOf(intent.getStringExtra("id")));
-        date.setDate(intent.getStringExtra("date"));
-        date.setDayDish(intent.getStringExtra("dayDish"));
-
-        CUtilitaries.test(getApplicationContext(), "salut");
+        initDayDish();
 
         // initialisartion des widgets
 
@@ -80,6 +76,18 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
         // initialisation des listeners
 
         initListeners();
+    }
+
+
+    private void initDayDish() {
+
+        Intent intent = getIntent();
+
+        date = new CDate();
+        date.setId(Integer.valueOf(intent.getStringExtra("id")));
+        date.setDate(intent.getStringExtra("date"));
+        date.setDayDish(intent.getStringExtra("dayDish"));
+        date.setImageIdentifier(intent.getStringExtra("imageIdentifier"));
     }
 
 
@@ -105,14 +113,20 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
     private void saveDayDishModification() throws ExecutionException, InterruptedException {
 
         date.setDayDish(String.valueOf(dayDishEditText.getText()));
+        date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
         CRestRequest.post(date, "dates");
     }
 
 
     private void initWidgets() {
 
+        dateTextView = (TextView) findViewById(R.id.date_textView_modification_activity);
+        dateTextView.setText(date.getDate());
+
         dayDishEditText = (EditText) findViewById(R.id.day_dish_editText_modification_activity);
         dayDishEditText.setText(date.getDayDish());
+        imageIdentifierEditText  =(EditText) findViewById(R.id.image_identifier_editText_modification_activity);
+        imageIdentifierEditText.setText(date.getImageIdentifier());
 
         validateButton = (Button) findViewById(R.id.validate_button_modification_activity);
     }

@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- titre de la page -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,6 +28,8 @@
             android:textStyle="bold"
             android:textSize="25dp"/>
 
+        <!-- zone d'affichage de la date -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,12 +37,19 @@
             android:paddingTop="20dp">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date : "/>
+
+            <TextView
                 android:id="@+id/date_textView_modification_activity"
-                android:text="Date : "
+                android:text="Recherche de données"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+        <!-- zone de modif de l'intitulé du plat du jour -->
 
         <TextView
             android:layout_width="match_parent"
@@ -52,7 +63,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="3"
-            android:paddingTop="5dp"/>
+            android:layout_marginTop="5dp"/>
+
+        <!-- zone de modif de l'identifiant de l'image -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Identifiant de l'image : "
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/image_identifier_editText_modification_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"/>
+
+        <!-- bouton acceptation du formulaire de modifs -->
 
         <Button
             android:id="@+id/validate_button_modification_activity"
