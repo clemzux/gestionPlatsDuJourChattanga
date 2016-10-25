@@ -13,10 +13,12 @@ public class CProperties {
 //    public static final String SERVER_URL = "http://176.157.85.69:9999/";
     // ip maison capi
 //    public static final String SERVER_URL = "http://192.168.0.195:9999/";
+    // ip bureau capi
+    public static final String SERVER_URL = "http://192.168.1.91:9999/";
     // ip maison mémé
 //    public static final String SERVER_URL = "http://192.168.1.17:9999/";
     // ip fac salle u026
-    public static final String SERVER_URL = "http://10.21.157.209:9999/";
+//    public static final String SERVER_URL = "http://10.21.157.209:9999/";
 
     // request types
     public final static String GET      = "GET";
@@ -25,6 +27,10 @@ public class CProperties {
     public final static String DELETE   = "DEL";
     public final static String GET_ALL  = "GET_ALL";
     public final static String GET_BY   = "GET_BY";
+
+    // paths for requests
+    public final static String DATES = "dates";
+    public final static String RESERVATIONS = "reservations";
 
     // Activity names
     public final static String HOME_ACTIVITY = "home";

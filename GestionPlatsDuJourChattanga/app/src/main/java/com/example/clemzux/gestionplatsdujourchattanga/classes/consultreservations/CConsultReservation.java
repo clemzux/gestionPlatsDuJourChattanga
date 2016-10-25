@@ -12,14 +12,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.clemzux.gestionplatsdujourchattanga.R;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CConsultDayDish;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.home.CHome;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CJsonDecoder;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CRestRequest;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CUtilitaries;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import chattanga.classes.CReservation;
+
 public class CConsultReservation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    //////// attributes ////////
+
+
+    private Spinner daySpinner, monthSpinner;
+    private TextView yearTextView;
+    private ListView reservationsListView;
+
+    private List<CReservation> reservations;
+
+
+    //////// methods ////////
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +70,76 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // my code
+
+        initWidgets();
+
+        populateWidgets();
+    }
+
+    private void populateWidgets() {
+
+        ArrayAdapter<CharSequence> adapterDays = ArrayAdapter.createFromResource(this, R.array.days_array, android.R.layout.simple_spinner_item);
+        adapterDays.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(adapterDays);
+
+        ArrayAdapter<CharSequence> adapterMonths = ArrayAdapter.createFromResource(this, R.array.months_array, android.R.layout.simple_spinner_item);
+        adapterMonths.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthSpinner.setAdapter(adapterMonths);
+
+        yearTextView.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+
+        populateListView();
+    }
+
+    private void populateListView() {
+
+        try {
+
+            getTodayReservations(CUtilitaries.getInstance().getCurrentDate());
+
+            String[] reservationsResume = new String[reservations.size()];
+            int i = 0;
+
+            for (CReservation reservation : reservations) {
+
+                reservationsResume[i] = reservation.getName() +
+                        "\n heure d'arrivée : " + reservation.getHourArrive() +
+                        "\n numéro : " + reservation.getTel() +
+                        "\n nombre pers : " + reservation.getNumberPeople() +
+                        "\n nombre pdj :" + reservation.getNumberDayDish() +
+                        "\n remarque : " + reservation.getNote();
+                i++;
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reservationsResume);
+            reservationsListView.setAdapter(adapter);
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initWidgets() {
+
+        daySpinner = (Spinner) findViewById(R.id.spinner_day_consult_reservations);
+        monthSpinner = (Spinner) findViewById(R.id.spinner_month_consult_reservations);
+
+        yearTextView = (TextView) findViewById(R.id.year_textView_consult_reservations);
+
+        reservationsListView = (ListView) findViewById(R.id.reservations_listView_consult_reservations);
+    }
+
+    private void getTodayReservations(String pTodayDate) throws ExecutionException, InterruptedException, IOException, JSONException {
+
+        reservations = new CJsonDecoder<CReservation>().DecoderList(CRestRequest.get_reservationByDate(pTodayDate), CReservation.class);
     }
 
     @Override

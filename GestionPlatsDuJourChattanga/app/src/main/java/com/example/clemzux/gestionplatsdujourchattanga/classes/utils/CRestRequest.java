@@ -44,6 +44,13 @@ public class CRestRequest {
         new post_Put().execute(mUrlString, CProperties.PUT);
     }
 
+    public static String get_reservationByDate(String pdate) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pdate) + "/" + CProperties.RESERVATIONS;
+
+        return new get_Del().execute(mUrlString, CProperties.GET).get();
+    }
+
     // Fonction which is setting url and call asynctask for GET ALL requests
     public static String get_All(String mObjectType) throws ExecutionException, InterruptedException {
 

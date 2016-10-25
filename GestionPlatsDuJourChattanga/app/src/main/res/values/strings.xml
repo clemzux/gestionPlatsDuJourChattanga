@@ -10,6 +10,8 @@
 
     <string name="image_identifier_textview">Identifiant de l\'image : </string>
 
+    <string name="info_consult_reservations">Les réservations affichées sont par defaut celles du jour !!!</string>
+
     <!-- Spinner's array -->
 
     <string-array name="days_array">

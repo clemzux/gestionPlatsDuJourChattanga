@@ -13,6 +13,8 @@ import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CC
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.home.CHome;
 
+import java.util.Calendar;
+
 /**
  * Created by clemzux on 25/08/16.
  */
@@ -32,5 +34,41 @@ public class CUtilitaries extends AppCompatActivity{
         t.show();
     }
 
+    public String getCurrentDate() {
 
+        String day, month, year;
+        int hour;
+        Calendar calendar = Calendar.getInstance();
+
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+        month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+
+        if (hour >= 15) {
+
+            day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH) + 1);
+
+            if (Integer.valueOf(day) > calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+
+                day = "01";
+                month = String.valueOf(calendar.get(Calendar.MONTH) + 2);
+
+                if (month.equals("13")) {
+
+                    month = "01";
+                    year = String.valueOf(calendar.get(Calendar.YEAR) + 1);
+                }
+            }
+        }
+
+        if (month.length() == 1)
+            month = "0" + month;
+
+        if (day.length() == 1)
+            day = "0" + day;
+
+        return day + "-" + month + "-" + year;
+    }
 }

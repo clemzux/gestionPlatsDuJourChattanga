@@ -112,7 +112,7 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
             i++;
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, dayDishNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dayDishNames);
         dayDishListView.setAdapter(adapter);
     }
 

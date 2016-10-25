@@ -12,5 +12,47 @@
     tools:context=".classes.consultreservations.CConsultReservation"
     tools:showIn="@layout/app_bar_consult_reservations">
 
+    <!-- spinner consultation réservations du jour  -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner_day_consult_reservations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Spinner>
+
+            <Spinner
+                android:id="@+id/spinner_month_consult_reservations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Spinner>
+
+            <TextView
+                android:id="@+id/year_textView_consult_reservations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info_consult_reservations"
+            android:layout_marginTop="10dp" />
+
+        <ListView
+            android:id="@+id/reservations_listView_consult_reservations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
