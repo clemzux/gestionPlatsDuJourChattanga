@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
     private Spinner daySpinner, monthSpinner;
     private TextView yearTextView;
     private ListView reservationsListView;
+    private Button searchButton;
 
     private List<CReservation> reservations;
 
@@ -75,7 +77,24 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
         initWidgets();
 
+        initListeners();
+
         populateWidgets();
+    }
+
+    private void initListeners() {
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String date = (String) daySpinner.getSelectedItem() + "-" +
+                        (String) monthSpinner.getSelectedItem() + "-" +
+                        String.valueOf(yearTextView.getText());
+
+                populateListView(date);
+            }
+        });
     }
 
     private void populateWidgets() {
@@ -90,27 +109,37 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
         yearTextView.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        populateListView();
+        populateListView(CUtilitaries.getInstance().getCurrentDate());
     }
 
-    private void populateListView() {
+    private void populateListView(String pDate) {
 
         try {
 
-            getTodayReservations(CUtilitaries.getInstance().getCurrentDate());
+            getTodayReservations(pDate);
 
             String[] reservationsResume = new String[reservations.size()];
             int i = 0;
 
-            for (CReservation reservation : reservations) {
+            if (reservations.size() != 0) {
 
-                reservationsResume[i] = reservation.getName() +
-                        "\n heure d'arrivée : " + reservation.getHourArrive() +
-                        "\n numéro : " + reservation.getTel() +
-                        "\n nombre pers : " + reservation.getNumberPeople() +
-                        "\n nombre pdj :" + reservation.getNumberDayDish() +
-                        "\n remarque : " + reservation.getNote();
-                i++;
+                for (CReservation reservation : reservations) {
+
+                    reservationsResume[i] = reservation.getName() +
+                            "\n heure d'arrivée : " + reservation.getHourArrive() +
+                            "\n numéro de téléphone : " + reservation.getTel() +
+                            "\n nombre pers : " + reservation.getNumberPeople() +
+                            "\n nombre plats du jour :" + reservation.getNumberDayDish() +
+                            "\n remarque : " + reservation.getNote();
+                    i++;
+                }
+
+
+            }
+            else {
+
+                reservationsResume = new String[1];
+                reservationsResume[0] = "Aucune réservation a cette date !";
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reservationsResume);
@@ -131,6 +160,8 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
         daySpinner = (Spinner) findViewById(R.id.spinner_day_consult_reservations);
         monthSpinner = (Spinner) findViewById(R.id.spinner_month_consult_reservations);
+
+        searchButton = (Button) findViewById(R.id.search_button_consult_reservations);
 
         yearTextView = (TextView) findViewById(R.id.year_textView_consult_reservations);
 
