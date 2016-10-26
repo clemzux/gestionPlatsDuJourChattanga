@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +19,7 @@ import android.widget.ListView;
 
 import com.example.clemzux.gestionplatsdujourchattanga.R;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.daydishmodification.CDayDishModification;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.home.CHome;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CJsonDecoder;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
@@ -32,7 +30,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
 
 import chattanga.classes.CDate;
@@ -46,6 +43,8 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
     private ListView dayDishListView;
     private List<CDate> dayDishList = null;
     private String[] dayDishNames = null;
+
+    private CConsultDayDishModel consultDayDishModel = CConsultDayDishModel.getInstance();
 
 
     //////// methods ////////
@@ -73,7 +72,7 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
         // on recupere les plats du jours déja créés
 
         try {
-            getDayDishs();
+            dayDishList = consultDayDishModel.getDayDishs();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -137,15 +136,6 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
         modificationDayDishIntent.putExtra("imageIdentifier", dayDishList.get(pDayDishNumber).getImageIdentifier());
 
         startActivity(modificationDayDishIntent);
-    }
-
-
-    private void getDayDishs() throws ExecutionException, InterruptedException, IOException, JSONException {
-
-        String mRequest = CRestRequest.get_All("dates");
-        CJsonDecoder<CDate> mDatesCJsonDecoder = new CJsonDecoder<CDate>();
-
-        dayDishList = mDatesCJsonDecoder.DecoderList(mRequest, CDate.class);
     }
 
 

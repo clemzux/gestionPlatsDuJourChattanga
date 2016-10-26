@@ -32,7 +32,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".classes.consultdaydish.CDayDishModification"
+            android:name=".classes.daydishmodification.CDayDishModification"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".classes.camera.CCamera"></activity>

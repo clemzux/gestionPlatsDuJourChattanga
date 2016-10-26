@@ -51,6 +51,8 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
 
     private ActionBarDrawerToggle toggle;
 
+    private CHomeModel homeModel = CHomeModel.getInstance();
+
 
     //////// methods ////////
 
@@ -135,7 +137,17 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
 
                     try {
 
-                        sendDayDishToServer();
+                        // objet a envoyer
+
+                        CDate date = new CDate();
+                        date.setDate(dateComplete);
+                        date.setDayDish(dayDish);
+                        date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
+
+                        homeModel.sendDayDishToServer(date, this);
+
+                        resetWidgets();
+                        CUtilitaries.messageLong(this, "Le plat du jour à bien été enregistré !");
 
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -145,49 +157,6 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
                 }
             }
         }
-    }
-
-
-    private void sendDayDishToServer() throws ExecutionException, InterruptedException {
-
-        // objet a envoyer
-
-        CDate date = new CDate();
-        date.setDate(dateComplete);
-        date.setDayDish(dayDish);
-        date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
-
-        if (isDayDishDateUnic(date)) {
-
-            CRestRequest.put(date, "dates");
-            resetWidgets();
-            CUtilitaries.messageLong(this, "Le plat du jour à bien été enregistré !");
-        }
-        else {
-
-            CUtilitaries.messageLong(this, "Un plat du jour existe déja à cette date !");
-        }
-    }
-
-    private Boolean isDayDishDateUnic(CDate pDate) {
-
-        try {
-
-            CDate date = new CJsonDecoder<CDate>().Decoder(CRestRequest.get_dateByDate(pDate.getDate()), CDate.class);
-
-            if (date.getDate() != null)
-                if (pDate.getDate().equals(date.getDate()))
-                    return false;
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return true;
     }
 
 
@@ -218,8 +187,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
             }
         }
 
-        Toast toast = Toast.makeText(getApplicationContext(), alertText, Toast.LENGTH_SHORT);
-        toast.show();
+        CUtilitaries.messageShort(this, alertText);
     }
 
 
@@ -321,7 +289,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(cameraIntent);
         }
         else {
-            CUtilitaries.messageLong(pContext, "T'y est deja gros ;-)");
+            CUtilitaries.messageLong(pContext, "T'y est deja lol ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

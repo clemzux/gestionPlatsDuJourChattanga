@@ -1,4 +1,4 @@
-package com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish;
+package com.example.clemzux.gestionplatsdujourchattanga.classes.daydishmodification;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.clemzux.gestionplatsdujourchattanga.R;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CConsultDayDish;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.home.CHome;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
@@ -39,6 +40,8 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
     private TextView dateTextView;
     private EditText dayDishEditText, imageIdentifierEditText;
     private Button validateButton;
+
+    private CDayDishModificationModel dayDishModificationModel = CDayDishModificationModel.getInstance();
 
 
     //////// methods ////////
@@ -96,30 +99,18 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
         validateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    saveDayDishModification();
-                }
-                catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                date.setDayDish(String.valueOf(dayDishEditText.getText()));
+                date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
+
+                dayDishModificationModel.saveDayDishModification(date);
+
+                CUtilitaries.messageLong(getApplicationContext(), "Le plat du jour a bien été modifié !");
+
+                Intent consultDayDishIntent = new Intent(getApplicationContext(), CConsultDayDish.class);
+                startActivity(consultDayDishIntent);
             }
         });
-    }
-
-
-    private void saveDayDishModification() throws ExecutionException, InterruptedException {
-
-        date.setDayDish(String.valueOf(dayDishEditText.getText()));
-        date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
-        CRestRequest.post(date, "dates");
-
-        CUtilitaries.messageLong(this, "Le plat du jour à bien été modifié !");
-
-        Intent consultReservationsIntent = new Intent(this, CConsultDayDish.class);
-        startActivity(consultReservationsIntent);
     }
 
 

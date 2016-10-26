@@ -50,6 +50,8 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
     private List<CReservation> reservations;
 
+    private CConsultReservationModel consultReservationModel = CConsultReservationModel.getInstance();
+
 
     //////// methods ////////
 
@@ -115,46 +117,34 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
     private void populateListView(String pDate) {
 
-        try {
+        reservations = consultReservationModel.getTodayReservations(pDate);
 
-            getTodayReservations(pDate);
+        String[] reservationsResume = new String[reservations.size()];
+        int i = 0;
 
-            String[] reservationsResume = new String[reservations.size()];
-            int i = 0;
+        if (reservations.size() != 0) {
 
-            if (reservations.size() != 0) {
+            for (CReservation reservation : reservations) {
 
-                for (CReservation reservation : reservations) {
-
-                    reservationsResume[i] = reservation.getName() +
-                            "\n heure d'arrivée : " + reservation.getHourArrive() +
-                            "\n numéro de téléphone : " + reservation.getTel() +
-                            "\n nombre pers : " + reservation.getNumberPeople() +
-                            "\n nombre plats du jour :" + reservation.getNumberDayDish() +
-                            "\n remarque : " + reservation.getNote();
-                    i++;
-                }
-
-
-            }
-            else {
-
-                reservationsResume = new String[1];
-                reservationsResume[0] = "Aucune réservation a cette date !";
+                reservationsResume[i] = reservation.getName() +
+                        "\n heure d'arrivée : " + reservation.getHourArrive() +
+                        "\n numéro de téléphone : " + reservation.getTel() +
+                        "\n nombre pers : " + reservation.getNumberPeople() +
+                        "\n nombre plats du jour :" + reservation.getNumberDayDish() +
+                        "\n remarque : " + reservation.getNote();
+                i++;
             }
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reservationsResume);
-            reservationsListView.setAdapter(adapter);
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+        else {
+
+            reservationsResume = new String[1];
+            reservationsResume[0] = "Aucune réservation a cette date !";
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, reservationsResume);
+        reservationsListView.setAdapter(adapter);
     }
 
     private void initWidgets() {
@@ -166,11 +156,6 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
         searchButton = (ImageButton) findViewById(R.id.search_button_consult_reservations);
 
         reservationsListView = (ListView) findViewById(R.id.reservations_listView_consult_reservations);
-    }
-
-    private void getTodayReservations(String pTodayDate) throws ExecutionException, InterruptedException, IOException, JSONException {
-
-        reservations = new CJsonDecoder<CReservation>().DecoderList(CRestRequest.get_reservationByDate(pTodayDate), CReservation.class);
     }
 
     @Override

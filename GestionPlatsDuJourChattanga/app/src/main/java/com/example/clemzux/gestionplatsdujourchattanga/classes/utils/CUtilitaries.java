@@ -34,6 +34,12 @@ public class CUtilitaries extends AppCompatActivity{
         t.show();
     }
 
+    public static void messageShort(Context pContext, String pVar) {
+
+        Toast t = Toast.makeText(pContext, pVar, Toast.LENGTH_LONG);
+        t.show();
+    }
+
     public String getCurrentDate() {
 
         String day, month, year;
