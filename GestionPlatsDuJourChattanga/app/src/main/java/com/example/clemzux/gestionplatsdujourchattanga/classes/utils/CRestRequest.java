@@ -44,6 +44,13 @@ public class CRestRequest {
         new post_Put().execute(mUrlString, CProperties.PUT);
     }
 
+    public static String get_dateByDate(String pDate) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.DATE_BY_DATE + pDate;
+
+        return new get_Del().execute(mUrlString, CProperties.GET).get();
+    }
+
     public static String get_reservationByDate(String pdate) throws ExecutionException, InterruptedException {
 
         String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pdate) + "/" + CProperties.RESERVATIONS;

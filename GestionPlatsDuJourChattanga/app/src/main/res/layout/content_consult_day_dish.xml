@@ -22,14 +22,15 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:paddingTop="10dp"
-            android:text="Plats du jour enregistrés :"
+            android:text="@string/daydish_consult_title"
             android:textStyle="bold"
             android:textSize="25dp"/>
 
         <ListView
             android:id="@+id/daydish_listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </RelativeLayout>

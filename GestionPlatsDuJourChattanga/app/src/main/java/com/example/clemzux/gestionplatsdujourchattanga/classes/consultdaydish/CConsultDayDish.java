@@ -210,7 +210,7 @@ public class CConsultDayDish extends AppCompatActivity implements NavigationView
             startActivity(consultReservationsIntent);
         }
         else {
-            CUtilitaries.test(pContext, "T'y est deja gros ;-)");
+            CUtilitaries.messageLong(pContext, "T'y est deja gros ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

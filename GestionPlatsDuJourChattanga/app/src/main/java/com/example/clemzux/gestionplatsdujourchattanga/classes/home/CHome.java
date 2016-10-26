@@ -24,10 +24,12 @@ import com.example.clemzux.gestionplatsdujourchattanga.R;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.camera.CCamera;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultdaydish.CConsultDayDish;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.consultreservations.CConsultReservation;
+import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CJsonDecoder;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CProperties;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CRestRequest;
 import com.example.clemzux.gestionplatsdujourchattanga.classes.utils.CUtilitaries;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
@@ -155,7 +157,44 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
         date.setDayDish(dayDish);
         date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
 
-        CRestRequest.post(date, "dates");
+        if (isDayDishDateUnic(date)) {
+
+            CRestRequest.put(date, "dates");
+            resetWidgets();
+            CUtilitaries.messageLong(this, "Le plat du jour à bien été enregistré !");
+        }
+        else {
+
+            CUtilitaries.messageLong(this, "Un plat du jour existe déja à cette date !");
+        }
+    }
+
+    private Boolean isDayDishDateUnic(CDate pDate) {
+
+        try {
+
+            CDate date = new CJsonDecoder<CDate>().Decoder(CRestRequest.get_dateByDate(pDate.getDate()), CDate.class);
+
+            if (date.getDate() != null)
+                if (pDate.getDate().equals(date.getDate()))
+                    return false;
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+
+    private void resetWidgets() {
+
+        dayDishEditText.setText("");
+        imageIdentifierEditText.setText("");
     }
 
 
@@ -282,7 +321,7 @@ public class CHome extends AppCompatActivity implements NavigationView.OnNavigat
             startActivity(cameraIntent);
         }
         else {
-            CUtilitaries.test(pContext, "T'y est deja gros ;-)");
+            CUtilitaries.messageLong(pContext, "T'y est deja gros ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

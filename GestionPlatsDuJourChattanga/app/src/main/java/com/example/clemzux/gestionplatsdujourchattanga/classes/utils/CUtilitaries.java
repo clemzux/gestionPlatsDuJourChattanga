@@ -28,9 +28,9 @@ public class CUtilitaries extends AppCompatActivity{
     private CUtilitaries() {
     }
 
-    public static void test(Context pContext, String pVar) {
+    public static void messageLong(Context pContext, String pVar) {
 
-        Toast t = Toast.makeText(pContext, pVar, Toast.LENGTH_SHORT);
+        Toast t = Toast.makeText(pContext, pVar, Toast.LENGTH_LONG);
         t.show();
     }
 

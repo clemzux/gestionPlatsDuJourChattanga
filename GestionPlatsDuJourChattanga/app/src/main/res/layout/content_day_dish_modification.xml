@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:paddingTop="10dp"
-            android:text="Modifier un plat du jour"
+            android:text="@string/daydish_modification_title"
             android:textStyle="bold"
             android:textSize="25dp"/>
 
@@ -39,11 +39,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date : "/>
+                android:text="@string/daydish_modification_date"/>
 
             <TextView
                 android:id="@+id/date_textView_modification_activity"
-                android:text="Recherche de données"
+                android:text="@string/daydish_modification_search_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -54,12 +54,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Plat du jour :"
+            android:text="@string/daydish_modification_daydish"
             android:paddingTop="20dp"/>
 
         <EditText
             android:id="@+id/day_dish_editText_modification_activity"
-            android:hint="En attente de données"
+            android:hint="@string/daydish_modification_search_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="3"
@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Identifiant de l'image : "
+            android:text="@string/daydish_modification_image_identifier"
             android:layout_marginTop="20dp"/>
 
         <EditText

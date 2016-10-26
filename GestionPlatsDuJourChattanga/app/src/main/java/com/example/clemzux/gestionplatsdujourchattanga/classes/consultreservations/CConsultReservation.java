@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,10 +44,9 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
     //////// attributes ////////
 
 
-    private Spinner daySpinner, monthSpinner;
-    private TextView yearTextView;
+    private Spinner daySpinner, monthSpinner, yearSpinner;
     private ListView reservationsListView;
-    private Button searchButton;
+    private ImageButton searchButton;
 
     private List<CReservation> reservations;
 
@@ -90,7 +90,7 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
                 String date = (String) daySpinner.getSelectedItem() + "-" +
                         (String) monthSpinner.getSelectedItem() + "-" +
-                        String.valueOf(yearTextView.getText());
+                        String.valueOf(yearSpinner.getSelectedItem());
 
                 populateListView(date);
             }
@@ -107,7 +107,8 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
         adapterMonths.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthSpinner.setAdapter(adapterMonths);
 
-        yearTextView.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        ArrayAdapter<CharSequence> adapterYears = ArrayAdapter.createFromResource(this, R.array.years_array, android.R.layout.simple_spinner_item);
+        yearSpinner.setAdapter(adapterYears);
 
         populateListView(CUtilitaries.getInstance().getCurrentDate());
     }
@@ -160,10 +161,9 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
 
         daySpinner = (Spinner) findViewById(R.id.spinner_day_consult_reservations);
         monthSpinner = (Spinner) findViewById(R.id.spinner_month_consult_reservations);
+        yearSpinner = (Spinner) findViewById(R.id.year_spinner_consult_reservations);
 
-        searchButton = (Button) findViewById(R.id.search_button_consult_reservations);
-
-        yearTextView = (TextView) findViewById(R.id.year_textView_consult_reservations);
+        searchButton = (ImageButton) findViewById(R.id.search_button_consult_reservations);
 
         reservationsListView = (ListView) findViewById(R.id.reservations_listView_consult_reservations);
     }
@@ -234,7 +234,7 @@ public class CConsultReservation extends AppCompatActivity implements Navigation
             startActivity(consultReservationsIntent);
         }
         else {
-            CUtilitaries.test(pContext, "T'y est deja gros ;-)");
+            CUtilitaries.messageLong(pContext, "T'y est deja gros ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

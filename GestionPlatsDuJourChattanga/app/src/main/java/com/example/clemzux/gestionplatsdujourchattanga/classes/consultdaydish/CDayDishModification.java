@@ -115,6 +115,11 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
         date.setDayDish(String.valueOf(dayDishEditText.getText()));
         date.setImageIdentifier(String.valueOf(imageIdentifierEditText.getText()));
         CRestRequest.post(date, "dates");
+
+        CUtilitaries.messageLong(this, "Le plat du jour à bien été modifié !");
+
+        Intent consultReservationsIntent = new Intent(this, CConsultDayDish.class);
+        startActivity(consultReservationsIntent);
     }
 
 
@@ -193,7 +198,7 @@ public class CDayDishModification extends AppCompatActivity implements Navigatio
             startActivity(consultReservationsIntent);
         }
         else {
-            CUtilitaries.test(pContext, "T'y est deja gros ;-)");
+            CUtilitaries.messageLong(pContext, "T'y est deja gros ;-)");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -31,6 +31,7 @@ public class CProperties {
     // paths for requests
     public final static String DATES = "dates";
     public final static String RESERVATIONS = "reservations";
+    public final static String DATE_BY_DATE = "dates/date/";
 
     // Activity names
     public final static String HOME_ACTIVITY = "home";

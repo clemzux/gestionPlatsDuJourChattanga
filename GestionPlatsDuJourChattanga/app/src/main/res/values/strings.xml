@@ -6,11 +6,19 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="daydish_modification_title"><u>Modifier un plat du jour</u></string>
+    <string name="daydish_modification_date">Date : </string>
+    <string name="daydish_modification_search_data">Recherche de données</string>
+    <string name="daydish_modification_daydish">Plat du jour : </string>
+    <string name="daydish_modification_image_identifier">Identifiant de l\'image : </string>
+
+    <string name="daydish_consult_title"><u>Plats du jour enregistrés :</u></string>
+
     <string name="action_settings">Settings</string>
 
     <string name="image_identifier_textview">Identifiant de l\'image : </string>
 
-    <string name="info_consult_reservations">Les réservations affichées sont par defaut celles du jour (à partir de 15h) !!!</string>
+    <string name="info_consult_reservations">Les réservations affichées sont par defaut celles du jour (Attention, changement à partir de 15h) !</string>
 
     <!-- Spinner's array -->
 
@@ -63,6 +71,15 @@
         <item>10</item>
         <item>11</item>
         <item>12</item>
+    </string-array>
+
+    <string-array name="years_array">
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
     </string-array>
 
 </resources>
